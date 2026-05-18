@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Not Found</title>
+</head>
+<body>
+<section>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 text-center">
+            <h1 class="display-1 fw-bold text-danger">404</h1>
+            <h2 class="mb-4">Student Not Found</h2>
+            <div class="alert alert-warning" role="alert" th:if="${errorMessage}">
+                <p class="mb-0" th:text="${errorMessage}">The requested student could not be found.</p>
+            </div>
+            <div class="alert alert-warning" role="alert" th:unless="${errorMessage}">
+                <p class="mb-0">The requested resource could not be found.</p>
+            </div>
+            <a th:href="@{/students}" class="btn btn-primary mt-3">Return to Students List</a>
+        </div>
+    </div>
+</section>
+</body>
+</html>

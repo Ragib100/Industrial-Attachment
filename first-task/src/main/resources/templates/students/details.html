@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Student Details</title>
+</head>
+<body>
+<section class="py-4">
+    <div class="card mx-auto" style="max-width: 600px;">
+        <div class="card-body p-5 text-center">
+            
+            <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 100px; height: 100px;">
+                <i class="bi bi-person-circle fs-1"></i>
+            </div>
+            
+            <h3 class="fw-bold mb-1" th:text="${student.name}">John Doe</h3>
+            <p class="text-muted d-flex align-items-center justify-content-center gap-2 mb-4">
+                <i class="bi bi-envelope-fill"></i> <span th:text="${student.email}">john@example.com</span>
+            </p>
+            
+            <div class="row text-start bg-light rounded-4 p-4 align-items-center mb-4">
+                <div class="col-6 mb-3">
+                    <div class="text-muted small text-uppercase fw-bold mb-1">Department</div>
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill border border-primary border-opacity-25" th:text="${student.dept}">Computer Science</span>
+                </div>
+                <div class="col-6 mb-3">
+                    <div class="text-muted small text-uppercase fw-bold mb-1">System ID</div>
+                    <div class="font-monospace small text-truncate" th:text="${student.id}" th:title="${student.id}">12345</div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <a th:href="@{/students}" class="btn btn-outline-secondary px-4 shadow-sm">
+                    <i class="bi bi-arrow-left me-2"></i>Back
+                </a>
+                <a th:href="@{/students/{id}/edit(id=${student.id})}" class="btn btn-warning px-4 shadow-sm text-dark">
+                    <i class="bi bi-pencil-fill me-2"></i>Edit
+                </a>
+                <form th:action="@{/students/{id}/delete(id=${student.id})}" method="post" onsubmit="return confirm('Delete this student permanently?');">
+                    <button type="submit" class="btn btn-danger px-4 shadow-sm">
+                        <i class="bi bi-trash-fill me-2"></i>Delete
+                    </button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</section>
+</body>
+</html>

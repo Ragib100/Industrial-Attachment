@@ -1,0 +1,48 @@
+Steps to Implement Student Management Module (Spring Boot + Thymeleaf)
+======================================================================
+
+1. Dependencies Setup
+   - Verify `pom.xml` includes necessary starters:
+     * `spring-boot-starter-web` (MVC)
+     * `spring-boot-starter-thymeleaf` (View)
+     * `spring-boot-starter-data-jpa` (Database)
+     * `spring-boot-starter-validation` (Form validation)
+
+2. Domain and DTO Layer
+   - Create `Student` Entity (`@Entity`, `@Table(name="students")`) with fields (ID, name, email, department, etc.).
+   - Create `StudentDTO` class. Use DTOs for form binding to separate view data from persistence logic.
+   - Add Validation annotations (`@NotBlank`, `@Email`, etc.) to the DTO.
+
+3. Repository Layer
+   - Create `StudentRepository` extending `JpaRepository<Student, Long>`.
+
+4. Service Layer
+   - Create `StudentService` interface with methods: `findAll`, `findById`, `create`, `update`, `delete`.
+   - Create `StudentServiceImpl` implementing the service.
+   - Add exception handling logic here (e.g., if a student ID is not found, throw a `StudentNotFoundException`).
+
+5. Controller Layer (`StudentController`)
+   - Annotate with `@Controller` and `@RequestMapping("/students")`.
+   - Implement handlers:
+     * `GET /`: return the list view.
+     * `GET /{id}`: return the details view.
+     * `GET /create`: return the create form populated with an empty DTO.
+     * `POST /create`: handle submission. Use `@Valid` `StudentDTO` and `BindingResult`. Return to form on validation errors.
+     * `GET /{id}/edit`: return the update form populated with existing data.
+     * `POST /{id}/edit`: handle the update submission.
+     * `POST /{id}/delete`: handle deletion (use POST instead of GET for destructive actions).
+
+6. Views Layer (Thymeleaf templates in `src/main/resources/templates/`)
+   - Set up Fragments (`fragments/layout.html`): Create a reusable layout containing head, navbar, and footer (integrate Bootstrap CDN here).
+   - `students/list.html`: Display a table of students. Handle empty states gracefully (`th:if="${#lists.isEmpty(students)}"`).
+   - `students/details.html`: Display read-only details for a specific student.
+   - `students/create.html` & `students/edit.html`: Form elements containing validation bindings (`th:errors`, `th:classappend="${#fields.hasErrors(...)}"`).
+
+7. Error Handling
+   - Implement `@ControllerAdvice` to handle `StudentNotFoundException` and route to a custom custom error page.
+   - Create `error/404.html` to show a user-friendly "Not Found" message.
+
+8. Testing
+   - Write basic unit tests to ensure validation is working and views map correctly.
+
+Review this file. When you are ready, I can help you implement these steps one by one.
